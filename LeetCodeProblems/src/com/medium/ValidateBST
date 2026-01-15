@@ -1,39 +1,62 @@
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
- */
-class Solution {
-    public boolean isValidBST(TreeNode root) {
+package com.medium;
 
-        return helper(root, Long.MIN_VALUE, Long.MAX_VALUE);
+class TreeNode {
+	int val;
+	TreeNode left;
+	TreeNode right;
 
-    }
+	TreeNode() {
+	}
 
-    public boolean helper(TreeNode node, long minVal, long maxVal) {
+	TreeNode(int val) {
+		this.val = val;
+	}
 
-        if (node == null) {
-            return true;
-        }
+	TreeNode(int val, TreeNode left, TreeNode right) {
+		this.val = val;
+		this.left = left;
+		this.right = right;
+	}
+}
 
-        if (node.val > minVal && node.val < maxVal) {
+public class ValidateBST {
 
-            return helper(node.left, minVal, node.val) && helper(node.right, node.val, maxVal);
+	public boolean isValidBST(TreeNode root) {
 
-        }
+		return helper(root, Long.MIN_VALUE, Long.MAX_VALUE);
 
-        return false;
+	}
 
-    }
+	public boolean helper(TreeNode node, long minVal, long maxVal) {
+
+		if (node == null) {
+			return true;
+		}
+
+		if (node.val > minVal && node.val < maxVal) {
+
+			return helper(node.left, minVal, node.val) && helper(node.right, node.val, maxVal);
+
+		}
+
+		return false;
+
+	}
+
+	public static void main(String[] args) {
+
+		TreeNode root = new TreeNode(2);
+		root.left = new TreeNode(1);
+		root.right = new TreeNode(3);
+
+		ValidateBST bst = new ValidateBST();
+
+		if (bst.isValidBST(root)) {
+			System.out.println("Valid BST");
+		} else {
+			System.out.println("Invalid BST");
+		}
+
+	}
 
 }
