@@ -1,0 +1,21 @@
+class Solution {
+    public boolean isBalanced(String num) {
+
+        char ch[] = num.toCharArray();
+
+        int evenSum = 0, oddSum = 0;
+
+        for (int i = 0; i < ch.length; i++) {
+
+            if (i % 2 == 0) {
+                evenSum += (ch[i] - 48);
+            } else {
+                oddSum += (ch[i] - 48);
+            }
+
+        }
+
+        return oddSum == evenSum;
+
+    }
+}
