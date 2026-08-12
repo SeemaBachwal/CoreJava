@@ -1,0 +1,115 @@
+class Solution {
+    public int numDecodings(String s) {
+
+        // check base condition
+        if (s.charAt(0) == '0') {
+            return 0;
+        }
+
+        if (s.length() == 1)
+            return 1;
+
+        char ch[] = s.toCharArray();
+        int preSum[] = new int[ch.length];
+
+        int len = ch.length;
+
+        preSum[0] = 1;
+
+        int prevChar = ch[0] - 48;
+        int currChar = ch[1] - 48;
+
+        if (isValidPair(prevChar, currChar)) {
+
+            if (currChar == 0) {
+                preSum[1] = 1;
+            } else {
+                preSum[1] = preSum[0] + 1;
+            }
+        } else if (currChar != 0) {
+
+            preSum[1] = preSum[0];
+
+        }
+
+        //System.out.println("prevChar : " + prevChar);
+        //System.out.println("currChar : " + currChar);
+
+        //printPresum(preSum, len);
+
+        int i = 2;
+
+        while (i < len) {
+
+            int curr = ch[i] - 48;
+            int prev = ch[i - 1] - 48;
+
+            if (curr == 0 && prev == 0)
+                return 0;
+
+            //System.out.println("\n\ni : " + i);
+            //System.out.println("prev : " + prev);
+            //System.out.println("curr : " + curr);
+
+            //System.out.println();
+
+            if (isValidPair(prev, curr)) {
+
+                //System.out.println("isValid while loop");
+
+                if (curr == 0) {
+                    preSum[i] = preSum[i - 2];
+                } else {
+                    preSum[i] = preSum[i - 2] + preSum[i - 1];
+                }
+
+                //printPresum(preSum, len);
+            } else {
+
+                //System.out.println("NOT valid while loop");
+
+
+                if (curr != 0) {
+                    preSum[i] = preSum[i - 1];
+
+                }
+
+                //printPresum(preSum, len);
+            }
+
+            //System.out.println("isValidPair : "+ isValidPair(prev, curr));
+
+            i++;
+
+        }
+
+        return preSum[len - 1];
+
+    }
+
+    /*public void printPresum(int preSum[], int n) {
+
+        for (int p = 0; p < n; p++) {
+            System.out.print(preSum[p] + " ");
+        }
+    }*/
+
+    public boolean isValidPair(int prev, int curr) {
+
+        if (curr == 0) {
+            if (prev == 1 || prev == 2)
+                return true;
+            else
+                return false;
+        }
+
+        if (prev == 1)
+            return true;
+
+        if (prev == 2 && curr <= 6) {
+            return true;
+        }
+
+        return false;
+    }
+}
